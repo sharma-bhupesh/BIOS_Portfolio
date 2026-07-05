@@ -1,0 +1,31 @@
+{
+    "recipient": "Bhupesh Sharma",
+    "email": "bhupeshsarswat13@gmail.com",
+
+    "fields": [
+        {
+            "id": "from",
+            "label": "From",
+            "type": "text",
+            "placeholder": "your@email.com"
+        },
+        {
+            "id": "subject",
+            "label": "Subject",
+            "type": "text",
+            "placeholder": "Subject..."
+        },
+        {
+            "id": "message",
+            "label": "Message",
+            "type": "textarea",
+            "placeholder": "Write your message..."
+        }
+    ],
+
+    "acts": [
+        {
+            "title": "Send"
+        }
+    ]
+}

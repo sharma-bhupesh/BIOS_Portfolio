@@ -1,0 +1,107 @@
+
+@import url(./monitor.css);
+
+@font-face {
+    font-family: "BIOS";
+    src: url("../fonts/Ac437_IBM_BIOS.ttf") format("truetype");
+}
+
+*{
+    cursor: none !important;
+}
+
+html, body{
+    margin:0;
+    padding: 0;
+    background: black;
+}
+
+#app{
+    background: black;
+    min-height: 100vh;
+}
+#boot-screen{
+    width: 100vw;
+    height: 100vh;
+
+    background: black;
+    color: aliceblue;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    padding: 20px;
+    box-sizing: border-box;
+}
+#boot-text{
+    font-family: BIOS;
+    font-size: 18px;
+    line-height: 1.4;
+    margin: 0;
+    white-space: pre-wrap;
+    pointer-events: none;
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.2), 0 0 6px rgba(140,140,255,.2);
+}
+#firmware-logo{
+    position: absolute;
+    top: 8%;
+    right: 7%;
+    width: 200px;
+    opacity: .55;
+
+    user-select: none;
+    pointer-events: none;
+}
+
+#no-signal-screen{
+    position:fixed;
+    inset:0;
+    background:#8f8f8f;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.signal-box{
+    background: hsla(42, 100%, 98%, 0.941);
+    font-family: "BIOS", monospace;
+    width:520px;
+    padding:55px;
+    border:2px solid #3a3a3a;
+    text-align:center;
+    box-shadow:
+        inset 1px 1px #d9d9d9,
+        inset -1px -1px #6d6d6d,
+        2px 2px 0 rgba(0,0,0,.25);
+    z-index: 2;
+}
+
+.signal-title{
+    font-size:30px;
+    color: #303030;
+    margin-bottom:25px;
+    letter-spacing:4px;
+}
+
+.signal-subtitle{
+    color: #303030;
+    font-size:18px;
+    margin-bottom:20px;
+}
+
+.signal-countdown{
+    color: #303030;
+    opacity:.8;
+    animation: blink 1s infinite;
+}
+
+#tv-static{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    display:block;
+    opacity:.45;
+    z-index: 1;
+}

@@ -1,0 +1,564 @@
+
+@import url(./monitor.css);
+
+@font-face {
+    font-family: "BIOS";
+    src: url("../fonts/Ac437_IBM_BIOS.ttf") format("truetype");
+}
+
+@keyframes blink{
+    50%{
+        opacity: 0;
+    }
+}
+
+@keyframes biosSelect{
+    0%{
+        transform: scaleX(0);
+    }
+    70%{
+        transform: scaleX(1.08);
+    }
+    100%{
+        transform: scaleX(1);
+    }
+}
+
+@keyframes popupOpen{
+    from{
+        opacity:0;
+        transform:translate(-50%,-50%) scale(.9);
+    }
+
+    to{
+        opacity:1;
+        transform:translate(-50%,-50%) scale(1);
+    }
+}
+
+@keyframes textGlow{
+    from{
+        opacity:.85;
+    }
+
+    to{
+        opacity:1;
+    }
+}
+
+@keyframes crtFlicker{
+    0%{
+        filter:brightness(1);
+    }
+
+    20%{
+        filter:brightness(.92);
+    }
+
+    35%{
+        filter:brightness(1.08);
+    }
+
+    50%{
+        filter:brightness(.88);
+    }
+
+    65%{
+        filter:brightness(1.02);
+    }
+
+    80%{
+        filter:brightness(.95);
+    }
+
+    100%{
+        filter:brightness(1);
+    }
+}
+
+@keyframes refreshBlack{
+    from{
+        opacity:1;
+    }
+
+    to{
+        opacity:0;
+    }
+}
+
+*{
+    cursor: none !important;
+}
+
+body{
+    background-color: hsla(42, 100%, 98%, 0.941);
+    font-family: "BIOS", monospace;
+    color: #aaaaaa;
+}
+
+.heading{
+    top: -2px;
+    width: 100%;
+    text-align: center;
+}
+
+.bottom-line{
+    position: fixed;
+    bottom: 12px;
+    left: 0%;
+    width: 100%;
+}
+
+.top-line{
+    position: fixed;
+    top: 35px;
+    left: 0%;
+    width: 100%;
+}
+
+.menu{
+    position: fixed;
+    top: 50%;
+    left: 40%;
+
+    transform: translate(-50%, -50%);
+
+    text-align: left;
+    font-size: 20px;
+    line-height: 1.8;
+}
+
+.contact{
+    position: fixed;
+    font-size: 17px;
+    right: 3%;
+    text-align: center;
+}
+
+.exit{
+    position: fixed;
+    font-size: 20px;
+    left: 45%;
+    bottom: 55px;
+    text-align: center;
+}
+
+.social{
+    position: fixed;
+    font-size: 17px;
+    left: 3%;
+    text-align: center;
+}
+
+footer{
+    position: fixed;
+    bottom: -2px;
+    width: 100%;
+    text-align: center;
+    
+}
+
+.menu-item{
+    display: block;
+    padding: 2px 14px;
+    transform-origin: center;
+}
+
+.selected{
+    background: #960000;
+    color: #fff78d;
+    display: inline-block;
+
+    animation: biosSelect 180ms ease-out;
+
+    box-shadow: 
+    2px 2px 0 #330000,
+    3px 3px 0 #190000;
+    padding: 0px 6px;
+}
+
+.help-arrows{
+    position: fixed;
+    font-size: 17px;
+    left: 3%;
+    bottom: 32px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.help-enter{
+    position: fixed;
+    font-size: 17px;
+    right: 3%;
+    bottom: 32px;
+    text-align: left;
+}
+
+.selected::after{
+    content:"_";
+    margin-left:0px;
+    animation: blink 1s infinite;
+}
+
+.hidden{
+    display:none;
+}
+
+.screen{
+
+    position:fixed;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:75vw;
+    height:80vh;
+
+    background:hsla(42, 100%, 98%, 0.978);
+    border:2px solid #d0d0d0;
+    z-index:1000;
+
+    box-shadow:
+        6px 6px 0 #00000066,
+        12px 12px 0 #505050;
+    
+    animation:popupOpen .15s ease-out;
+}
+.resume-window{
+    width:40vw;
+    height:90vh;
+}
+
+.screen-title{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-items: end;
+    justify-content: center;
+    padding: 10px 20px;
+    border-bottom: 2px solid #AAAAAA;
+}
+
+.screen-body{
+    height: calc(100% - 69px);
+}
+
+.screen-content{
+    width:100%;
+    height:100%;
+    box-sizing:border-box;
+    overflow: hidden;
+}
+
+.markdown-content{
+    padding: 12px;
+    white-space: pre-wrap;
+    overflow: auto;
+}
+
+body.resume-frame *{
+    cursor: default !important;
+}
+
+.pdf-content{
+    padding: 0;
+    overflow: hidden;
+}
+
+.screen-footer{
+
+    position:absolute;
+
+    bottom:0;
+    width:100%;
+
+    text-align:center;
+
+    border-top:2px solid #AAAAAA;
+    padding:6px;
+    box-sizing: border-box;
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,0.35);
+
+    z-index:900;
+}
+
+.title-center{
+    text-align: center;
+}
+
+.title-left{
+    position: absolute;
+    left: 20px;
+}
+
+.title-right{
+    position: absolute;
+    right: 20px;
+}
+
+.download-btn, .github-btn{
+    justify-self: end;
+    background: #960000;
+    color: #fff78d;
+    box-shadow: 
+    2px 2px 0 #330000,
+    3px 3px 0 #190000;
+    padding: 0px 6px;
+}
+
+.resume-frame{
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+.project-item{
+    display: block;
+    font-size:20px;
+    line-height: 1.8;
+    padding:4px 10px;
+    width:fit-content;
+    transform-origin: center;
+}
+
+.form-actions{
+    width:450px;
+    margin-left:110px;
+    margin-top:28px;
+    text-align:right;
+}
+
+.send-btn{
+    background: #960000;
+    color: #fff78d;
+    display: inline-block;
+
+    box-shadow: 
+    2px 2px 0 #330000,
+    3px 3px 0 #190000;
+    padding: 0px 6px;
+
+    cursor:pointer;
+    user-select:none;
+
+}
+
+.error-content{
+    padding: 12px;
+    white-space: pre-wrap;
+    color: #960000;
+    overflow: auto;
+}
+
+body.contact-mode *{
+    cursor: default !important;
+}
+
+body.contact-mode .contact-input{
+    user-select:text;
+}
+
+body.contact-mode textarea, body.contact-mode input{
+    pointer-events:auto;
+}
+
+.contact-row{
+    display:flex;
+    align-items:flex-start;
+    margin-bottom:18px;
+}
+
+.contact-label{
+    width:110px;
+    flex-shrink:0;
+    text-align:left;
+}
+
+.contact-recipient{
+    display:inline-block;
+    padding:5px 8px;
+    border:2px inset #c6bfae;
+    background:#f5f1e6;
+    color:#666666;
+    box-sizing:border-box;
+    padding:4px 8px;
+    border:2px inset #cfc8b8;
+    min-width:340px;
+}
+
+.contact-input{
+    width:340px;
+    padding:5px 8px;
+    border:2px inset #c6bfae;
+    background:#f5f1e6;
+    color:#444444;
+    font-family:"BIOS", monospace;
+    font-size:18px;
+    outline:none;
+    box-sizing:border-box;
+
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+
+    box-shadow:
+        inset 1px 1px 0 #b3ab98,
+        inset -1px -1px 0 #ffffff;
+}
+
+.contact-input:focus{
+    border:2px solid #7d0000;
+    background:#fffdf6;
+}
+
+.contact-input::placeholder{
+    color:#888888;
+    font-family:"BIOS", monospace;
+    opacity:1;
+}
+
+textarea.contact-input{
+    width:750px;
+    min-height:260px;
+    resize:none;
+    overflow-y:auto;
+    line-height:1.5;
+    padding-top:8px;
+}
+
+.contact-row:has(textarea){
+    align-items:flex-start;
+}
+
+.contact-row:has(textarea) .contact-label{
+    padding-top:8px;
+}
+
+.shutdown-dialog{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:32px;
+    text-align:center;
+    font-size:20px;
+}
+
+.shutdown-actions{
+    display:flex;
+    justify-content:center;
+}
+
+.shutdown-window{
+    width: 520px;
+    height: 260px;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
+.shutdown-screen{
+    position:fixed;
+    inset:0;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    gap: 18px;
+    background:black;
+    color: white;
+    font-size:40px;
+    z-index:999999;
+}
+
+.shutdown-title{
+    font-family: "BIOS";
+    font-size: 40px;
+    color: white;
+}
+
+.crt-screen{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    background:#000;
+}
+
+.crt-bars{
+    position:absolute;
+    inset:0;
+    display:flex;
+    animation: crtFlicker .18s infinite;
+}
+
+.bar{
+    flex:1;
+    height:100%;
+}
+
+.white{
+    background:#d9d9d9;
+}
+.yellow{
+    background:#d8d629;
+}
+.cyan{
+    background:#00d6d6;
+}
+.green{
+    background:#00c200;
+}
+.magenta{
+    background:#d100d1;
+}
+.red{
+    background:#d10000;
+}
+.blue{
+    background:#0000c8;
+}
+
+.crt-message{
+    position:absolute;
+    left:0;
+    right:0;
+    top:50%;
+    transform:translateY(-50%);
+    background:black;
+    padding:30px 0;
+    text-align:center;
+    z-index:2;
+}
+
+.crt-title{
+    color:#d7d7d7;
+    font-family:"BIOS";
+    font-size:50px;
+    letter-spacing:4px;
+    animation:textGlow .18s infinite alternate;
+}
+
+.crt-subtitle{
+    margin-top:15px;
+    color:#cfcfcf;
+    font-family:"BIOS";
+    font-size:26px;
+    animation:textGlow .18s infinite alternate;
+}
+
+.refresh-black{
+
+    animation: refreshBlack .18s forwards;
+
+}
