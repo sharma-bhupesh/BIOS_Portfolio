@@ -1,9 +1,8 @@
 ### Live Demonstration
 
-> *(Deployment link will be added after production deployment.)*
-
 ```
-//coming-soon
+![Live](https://biosportfolio.up.railway.app/)
+
 ```
 
 ---
@@ -147,7 +146,7 @@ Instead of describing problem-solving abilities, the project attempts to demonst
 
 Many portfolios explain what their author knows.
 
-BIOS Portfolio attempts to demonstrate **how the author thinks**.
+BIOS Portfolio attempts to demonstrate **how the I think**.
 
 Throughout the development of this project, emphasis was placed on designing systems that are:
 
@@ -282,9 +281,9 @@ This minimizes coupling while maximizing maintainability and extensibility.
                  │                              │                              │
             Navigation                     OverlayManager                 ContentManager
                  │                              │                              │
-                 └───────────────┬──────────────┴──────────────┬───────────────┘
-                                 │                             │
-                             Fault Handler                  Mail Service
+                 └──────────────────────────────┼──────────────────────────────┘
+                                                │
+                                              Utility
 ```
 
 Every module owns one responsibility.
