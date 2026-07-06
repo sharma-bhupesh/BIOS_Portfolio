@@ -73,6 +73,9 @@ Visitor Email:
         send_mail(subject=subject, message=body, from_email=settings.DEFAULT_FROM_EMAIL, recipient_list=[settings.EMAIL_HOST_USER], fail_silently= False)
         return JsonResponse({"success": True})
     
-    except Exception:
+    # except Exception:
+    #     logger.exception("Contact form failed.")
+    #     return JsonResponse({"success": False, "message": "Unable to process your request at this time."}, status=500)
+    except Exception as e:
         logger.exception("Contact form failed.")
-        return JsonResponse({"success": False, "message": "Unable to process your request at this time."}, status=500)
+        return JsonResponse({ "success": False, "message": str(e), "type": type(e).__name__, }, status=500,)

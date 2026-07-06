@@ -169,7 +169,7 @@ ALLOWED_HOSTS = [
     if host.strip()
 ]
 
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
 
 LOGGING = {
     "version": 1,
