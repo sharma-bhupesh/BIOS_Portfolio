@@ -1,6 +1,6 @@
 
 import BootManager from "../bootmanager.js";
-import NoSignalRenderer from "./NoSignalRenderer.js";
+import NoSignalRenderer from "./nosignalrenderer.js";
 import NoSignalAnimator from "./nosignalanimator.js";
 import Sound from "../../utils/sound.js";
 
