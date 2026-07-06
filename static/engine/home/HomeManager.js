@@ -9,6 +9,7 @@ import { HandleFault } from "../utils/faultHandler.js";
 import MailService from "../utils/mailservice.js";
 import Sound from "../utils/sound.js";
 import ShutdownManager from "../boot/shutdown/shutdownmanager.js";
+import Preloader from "../utils/preloader.js";
 
 export default class HomeManager{
     constructor(){
@@ -20,6 +21,7 @@ export default class HomeManager{
             this.launcher.launch(path);         
         };
         this.content = new ContentManager(this.overlay);
+        this.preloader = new Preloader(this.content);
         this.launcher = new Launcher(this.content);
         this.overlayOpen = false;
         this.overlay.mailservice = new MailService();
@@ -29,6 +31,7 @@ export default class HomeManager{
 
     start(){
         this.renderer.render();
+        this.preloader.start();
         this.navigation.onFocusChanged = (index) => {
             if(this.overlayOpen){
                 this.overlay.updateFocus(index);

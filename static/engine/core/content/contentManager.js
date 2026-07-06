@@ -1,20 +1,41 @@
+
+import ContentCache from "../../utils/cachemanager.js";
 import { HandleFault } from "../../utils/faultHandler.js";
 
 export default class ContentManager{
     constructor(overlay){
         this.overlay = overlay;
+        this.cache = new ContentCache();
     }
     async open(id){
+        if(this.cache.has(id)){
+            this.overlay.open(this.cache.get(id));
+            return;
+        }
         try {
             const metadata = await this._loadMetadata(id);
             const content = await this._loadContent(id, metadata);
             const contentObject = this._buildContent(metadata, content);
+            this.cache.set(id, contentObject);
             this.overlay.open(contentObject);
         }
         catch(error){
             const result = HandleFault({module: "ContentManager", functionName: "open", title: "CONTENT ERROR", message: error.message, details: id, fatal: false, error});
             this.overlay.open(result.fault);
         }
+    }
+    async preload(ids){
+        const tasks = ids.map(id => this._preloadSingle(id));
+        await Promise.allSettled(tasks);
+    }
+    async _preloadSingle(id){
+        if(this.cache.has(id)){
+            return;
+        }
+        const metadata = await this._loadMetadata(id);
+        const content = await this._loadContent(id, metadata);
+        const contentObject = this._buildContent(metadata, content);
+        this.cache.set(id, contentObject);
     }
     async _loadMetadata(id){
         const response = await fetch(`/static/content/${id}/metadata.json`);
