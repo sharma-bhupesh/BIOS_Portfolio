@@ -17,14 +17,14 @@ export default class ContentManager{
         }
     }
     async _loadMetadata(id){
-        const response = await fetch(`static/content/${id}/metadata.json`);
+        const response = await fetch(`/static/content/${id}/metadata.json`);
         if(!response.ok){
             throw new Error(`Metadata not found: ${id}`);
         }
         return await response.json();
     }
     async _loadContent(id, metadata){
-        const path = `static/content/${id}/data/${metadata.entry}`;
+        const path = `/static/content/${id}/data/${metadata.entry}`;
 
         switch(metadata.type){
             case "markdown":{

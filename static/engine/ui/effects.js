@@ -1,7 +1,7 @@
 
 export default class Effects{
     constructor(){
-        const refreshLine = document.querySelector(".refresh-line");
+        this.refreshLine = document.querySelector(".refresh-line");
     }
         RefreshLine(){
             if(!this.refreshLine) return;

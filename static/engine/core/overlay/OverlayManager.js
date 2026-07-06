@@ -143,19 +143,28 @@ export default class OverlayManager{
                                 return;
                             }
                             const data = ContactHelpers.collectFormData(this.formInputs);
-                            const result = await this.mailservice.send(data);
-                            if(result.success){
-                                ContactHelpers.clearForm(this.formInputs);
-                                const dialog = HandleSuccess({
-                                    title: "TRANSMISSION COMPLETE",
-                                    message: "Message delivered successfully."
-                                });
+                            try{
+                                const result = await this.mailservice.send(data);
+                                if(result.success){
+                                    ContactHelpers.clearForm(this.formInputs);
+                                    const dialog = HandleSuccess({
+                                        title: "TRANSMISSION COMPLETE",
+                                        message: "Message delivered successfully."
+                                    });
                                 this.open(dialog.fault);
+                                }
+                                else{
+                                    const dialog = HandleMessage({
+                                        title: "TRANSMISSION FAILED",
+                                        message: result.message
+                                    });
+                                    this.open(dialog.fault);
+                                }
                             }
-                            else{
+                            catch(error){
                                 const dialog = HandleMessage({
                                     title: "TRANSMISSION FAILED",
-                                    message: result.message
+                                    message:error.message
                                 });
                                 this.open(dialog.fault);
                             }
