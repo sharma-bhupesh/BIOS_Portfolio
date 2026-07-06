@@ -8,6 +8,7 @@ import json
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import ensure_csrf_cookie
 import logging
+import requests
 
 @ensure_csrf_cookie
 def home(request):
@@ -70,12 +71,35 @@ Visitor Email:
         if len(message) > 3000:
             return JsonResponse({"success": False, "message": "Message is too long."}, status=400)
         
-        send_mail(subject=subject, message=body, from_email=settings.DEFAULT_FROM_EMAIL, recipient_list=[settings.EMAIL_HOST_USER], fail_silently= False)
+        response = requests.post(
+            "https://api.brevo.com/v3/smtp/email",
+            headers={
+                "accept": "application/json",
+                "api-key": settings.BREVO_API_KEY,
+                "content-type": "application/json",
+            },
+            json={
+                "sender": {
+                    "email": settings.BREVO_FROM_EMAIL,
+                    "name": "BIOS Portfolio",
+                },
+                "to": [
+                    {
+                        "email": settings.BREVO_TO_EMAIL,
+                    }
+                ],
+                "subject": subject,
+                "textContent": body,
+                "replyTo": {
+                    "email": sender,
+                },
+            },
+            timeout=10,
+        )   
+
+        response.raise_for_status()
         return JsonResponse({"success": True})
     
-    # except Exception:
-    #     logger.exception("Contact form failed.")
-    #     return JsonResponse({"success": False, "message": "Unable to process your request at this time."}, status=500)
-    except Exception as e:
+    except Exception:
         logger.exception("Contact form failed.")
-        return JsonResponse({ "success": False, "message": str(e), "type": type(e).__name__, }, status=500,)
+        return JsonResponse({"success": False, "message": "Unable to process your request at this time."}, status=500)

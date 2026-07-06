@@ -9,9 +9,12 @@ export default class MailService{
             },
             body:JSON.stringify(data)
         });
-        if(!response.ok){
-            throw new Error(`HTTP ${response.status}`);
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || `HTTP ${response.status}`);
         }
+        return result;
         return await response.json();
     }
 
