@@ -70,6 +70,8 @@ Visitor Email:
         if len(message) > 3000:
             return JsonResponse({"success": False, "message": "Message is too long."}, status=400)
         
+        print("EMAIL_HOST_USER:", EMAIL_HOST_USER)
+        print("EMAIL_HOST_PASSWORD PRESENT:", bool(EMAIL_HOST_PASSWORD))
         send_mail(subject=subject, message=body, from_email=settings.DEFAULT_FROM_EMAIL, recipient_list=[settings.EMAIL_HOST_USER], fail_silently= False)
         return JsonResponse({"success": True})
     
