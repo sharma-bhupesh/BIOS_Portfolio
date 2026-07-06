@@ -1,9 +1,5 @@
-### Live Demonstration
+# Live Demonstration                            -              [BIOS Portfolio](https://biosportfolio.up.railway.app/)
 
-```
-![Live](https://biosportfolio.up.railway.app/)
-
-```
 
 ---
 
